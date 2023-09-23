@@ -1,0 +1,46 @@
+const {mongoose} = require('mongoose');
+const bcrypt = require('bcrypt');
+const userSchema = new mongoose.Schema({
+
+    username: {
+        type: 'String',
+        required: true,
+        minLength:3,
+        maxLength:50,
+        match: [/^[A-Za-z0-9]+$/, 'Username must be english'],   //? да се види имали го като условие 
+        unique: true,
+    },
+    email:{
+        //todo ..............
+
+    },
+    password:{
+        type: 'String',
+        required: true,
+        minLength:3,                                           //? да се гледа условието за минимална и максимална дължина 
+        maxLength:50,
+        validate: {
+            validator: function(value){
+                return /^[A-Za-z0-9]+$/.test(value)
+            },
+            message: 'Password must be only english characters'  //? да се види условието 
+        }
+    }
+
+
+})
+//todo: Валдиация repeatПassword - 
+
+
+userSchema.virtual('repeatPassword').set(function(value) {
+    if(value!== this.password) throw new Error('The password is not correct')
+});
+
+userSchema.pre('save', async function(){
+    const hash = await bcrypt.hash(this.password, 9) 
+    this.password = hash
+})
+
+const User = mongoose.model('User',userSchema)
+
+module.exports = User

@@ -7,7 +7,7 @@ const handlebars = require('express-handlebars');
 
 
 module.exports =(app) =>{
-    //TODO: ADD HANDLEBARS
+    //TODO:  3. ADD HANDLEBARS
 
     app.engine('hbs', handlebars.engine({
         extname: 'hbs',
@@ -15,11 +15,11 @@ module.exports =(app) =>{
     app.set('view engine', 'hbs');
     app.set('views','src/views');
     
-    //TODO: ADD BODY PARSER
+    //TODO: 1. ADD BODY PARSER
     app.use(express.urlencoded({ extended: false }))
+    //TODO: 2. STATIC
 
     app.use(express.static('src/static'))
-    //TODO: STATIC
 
 }
 
