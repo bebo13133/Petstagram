@@ -8,10 +8,11 @@ const userSchema = new mongoose.Schema({
         minLength:3,
         maxLength:50,
         match: [/^[A-Za-z0-9]+$/, 'Username must be english'],   //? да се види имали го като условие 
-        unique: true,
+        unique: { value: true, message: 'this name is already in use' },
     },
     email:{
-        //todo ..............
+       type: 'String',
+       required: true,
 
     },
     password:{
@@ -29,13 +30,15 @@ const userSchema = new mongoose.Schema({
 
 
 })
-//todo: Валдиация repeatПassword - 
+
+
+//todo: Валидация repeatPassword - 
 
 
 userSchema.virtual('repeatPassword').set(function(value) {
     if(value!== this.password) throw new Error('The password is not correct')
 });
-
+//?Хеширане на паролата
 userSchema.pre('save', async function(){
     const hash = await bcrypt.hash(this.password, 9) 
     this.password = hash

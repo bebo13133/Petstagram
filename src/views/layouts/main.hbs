@@ -83,6 +83,11 @@
             </div>
         </nav>
     </header>
+     {{#each errorMessage}}
+    <div class="errorContainer" id="notifications">
+      <p id="notification-message">{{this}}</p>
+    </div>
+    {{/each}}
     {{{body}}}
 
        <div class="footer">
