@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('../lib/jwt')
 const {SECRET_KEY} = require('../config/config')
 
-
+//TODO: LOGIN 
 exports.login = async (username, password) => {
 
     const user = await User.findOne({ username});
@@ -14,19 +14,20 @@ exports.login = async (username, password) => {
 
     const payload = {
         _id: user._id,
-        username: username.username,
+        username: user.username,
+        email: user.email,   //? optional property -според условието на задачата задаваме пропъртитата
     }
 
-    const token = jwt.sign(payload, SECRET_KEY, {expiresIn: '2d'})
+    const token = await jwt.sign(payload, SECRET_KEY, {expiresIn: '2d'})
 
     return token;
 };
 
-
+//TODO: REGISTER
 exports.register = async (userData) =>{
     const user = await User.findOne({username: userData.username});
     if(user){
-        throw new Error('This name is already in use')
+        throw new Error('This name is already in use')    //? Проверяваме за съществуващ вече user
     }
 
     return User.create(userData);

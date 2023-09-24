@@ -44,53 +44,53 @@
                         </li>
 
                         <!--For Guest User-->
-                        <li class="nav-item">
-                            <!-- Link to Login Page -->
-                            <a href="/users/login">
-                                <i>Login</i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <!-- Link to Register Page -->
-                            <a href="/users/register">
-                                <i>Register</i>
-                            </a>
-                        </li>
+                        {{#if isAuthenticated}}
 
-                        <!--For login users-->
                         <li class="nav-item">
-                            <!-- Link to Add Photo Page -->
                             <a href="#">
                                 <i>Add Photo</i>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <!-- Link to Profile Page -->
                             <a href="#">
                                 <i>Profile</i>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <!-- Link to Logout Page -->
                             <a href="/users/logout">
                                 <i>Logout</i>
                             </a>
                         </li>
+                        {{else}}
+                        <li class="nav-item">
+                            <a href="/users/login">
+                                <i>Login</i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/users/register">
+                                <i>Register</i>
+                            </a>
+                        </li>
+                        {{/if}}
                     </ul>
+
                 </div>
             </div>
         </nav>
     </header>
-     {{#each errorMessage}}
-    <div class="errorContainer" id="notifications">
-      <p id="notification-message">{{this}}</p>
+    {{#each errorMessage}}
+     <div>
+        <div class="errorContainer">
+            <p>{{this}}</p>
+        </div>
     </div>
     {{/each}}
     {{{body}}}
 
-       <div class="footer">
+    <div class="footer">
         <span class="footer-section">
             © 2023 SoftUni Back-End Exam
         </span>
