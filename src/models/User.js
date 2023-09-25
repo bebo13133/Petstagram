@@ -3,20 +3,20 @@ const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
 
     username: {
-        type: 'String',
+        type: String,
         required: true,
-        minLength:3,
+        minLength:[3, 'characters required minimum with 3 length'],
         maxLength:50,
         match: [/^[A-Za-z0-9]+$/, 'Username must be english'],   //? да се види имали го като условие 
         unique: { value: true, message: 'this name is already in use' },
     },
     email:{
-       type: 'String',
+       type: String,
        required: true,
 
     },
     password:{
-        type: 'String',
+        type: String,
         required: true,
         minLength:3,                                           //? да се гледа условието за минимална и максимална дължина 
         maxLength:50,
