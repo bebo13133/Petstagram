@@ -1,8 +1,8 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
-const jwt = require('../lib/jwt')
-const {SECRET_KEY} = require('../config/config')
-
+// const jwt = require('../lib/jwt')
+// const {SECRET_KEY} = require('../config/config')
+const {createToken} = require('../utils/tokenHelpers')
 //TODO: LOGIN 
 exports.login = async (username, password) => {
 
@@ -12,15 +12,10 @@ exports.login = async (username, password) => {
     const validPassword = await bcrypt.compare(password, user.password)
     if (!validPassword) throw new Error("Passwords do not match")
 
-    const payload = {
-        _id: user._id,
-        username: user.username,
-        email: user.email,   //? optional property -според условието на задачата задаваме пропъртитата
-    }
 
-    const token = await jwt.sign(payload, SECRET_KEY, {expiresIn: '2d'})
+const token = await createToken(user)
+return token;
 
-    return token;
 };
 
 //TODO: REGISTER
@@ -30,7 +25,9 @@ exports.register = async (userData) =>{
         throw new Error('This name is already in use')    //? Проверяваме за съществуващ вече user
     }
 
-    return User.create(userData);
+   const createdUser = User.create(userData);
+  const token= await createToken(createdUser)
+  return token;
 } 
 
     
