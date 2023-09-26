@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const { extractErrorMessage } = require('../utils/errorHelpers')
 const photoService = require('../services/photoService')
+const { isAuth } = require('../middlewares/authMiddleware')
 //? rendering
 router.get('/create', (req, res) => {
     res.render('photos/create')
@@ -47,7 +48,7 @@ router.get('/:photoId/details', async (req, res) => {
 })
 //? Edit photo
 
-router.get('/:photoId/edit', async (req, res) => {
+router.get('/:photoId/edit', isAuth, async (req, res) => {
     try {
         const photo = await photoService.getOne(req.params.photoId).lean()
 
@@ -58,10 +59,26 @@ router.get('/:photoId/edit', async (req, res) => {
         res.render(`photos/edit`, { error: errorMessage })
     }
 });
+router.post('/:photoId/edit',isAuth, async (req, res) => {
+    const photoData = req.body
+try{
+   
+    await photoService.edit(req.params.photoId, photoData)
+
+    res.redirect(`/photos/${req.params.photoId}/details`)
+}catch(err){
+
+    const errorMessage = extractErrorMessage(err)
+
+    res.render(`/photos/${req.params.photoId}/edit`, { error: errorMessage, ...photoData })
+}
+
+
+})
 
 //? Comments
 
-router.post('/:photoId/comments',async (req, res) => {
+router.post('/:photoId/comments',isAuth,async (req, res) => {
 
 const photoId = req.params.photoId
 const { comment } = req.body
@@ -81,7 +98,7 @@ res.redirect(`/photos/${photoId}/details`)
 
 //? Delete photo
 
-router.get('/:photoId/delete', async (req, res) => {
+router.get('/:photoId/delete',isAuth, async (req, res) => {
 
     try {
         await photoService.delete(req.params.photoId)
@@ -97,22 +114,7 @@ router.get('/:photoId/delete', async (req, res) => {
     }
 });
 
-router.post('/:photoId/edit', async (req, res) => {
-    const photoData = req.body
-try{
-   
-    await photoService.edit(req.params.photoId, photoData)
 
-    res.redirect(`/photos/${req.params.photoId}/details`)
-}catch(err){
-
-    const errorMessage = extractErrorMessage(err)
-
-    res.render(`/photos/${req.params.photoId}/edit`, { error: errorMessage, ...photoData })
-}
-
-
-})
 
 
 
