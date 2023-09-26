@@ -10,7 +10,7 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-    const { username, password } = req.body
+    const { username, password, } = req.body
 
     try {
         const token = await userService.login(username, password);
@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
 
         const errorMessage = extractErrorMessage(err)
 
-        res.status(400).render('users/login', { errorMessage })
+        res.status(400).render('users/login', { error: errorMessage })
     }
 
 });
@@ -36,20 +36,18 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
 
-    const { username, email, password, repeatPassword } = req.body
-
     try {
-       const token= await userService.register({ username, email, password, repeatPassword })
-       res.cookie('auth', token, { httpOnly: true })
+        const { username, email, password, repeatPassword } = req.body
+
+        const token = await userService.register({ username, email, password, repeatPassword })
+        res.cookie('auth', token, { httpOnly: true })
         res.redirect('/')
-    } catch (err) {
 
-        const errorMessage = extractErrorMessage(err)
+    } catch (errors) {
 
-        res.status(400).render('users/register', { errorMessage })
-
+        const errorMessage = extractErrorMessage(errors)
+        res.status(400).render('users/register', { error: errorMessage })
     }
-
 });
 
 

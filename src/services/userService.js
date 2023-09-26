@@ -25,7 +25,7 @@ exports.register = async (userData) =>{
         throw new Error('This name is already in use')    //? Проверяваме за съществуващ вече user
     }
 
-   const createdUser = User.create(userData);
+   const createdUser = await User.create(userData);
   const token= await createToken(createdUser)
   return token;
 } 

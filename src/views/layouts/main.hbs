@@ -12,12 +12,14 @@
 
 <body>
     <!--Error Container-->
-
-    <!-- <div>
+    
+   {{#each error}}
+     <div>
         <div class="errorContainer">
-            <p>Error</p>
+            <p>{{this}}</p>
         </div>
-    </div> -->
+    </div>
+    {{/each}}
 
     <!-- Starts Header Section with Navigation Bar -->
     <header>
@@ -38,7 +40,7 @@
                     <ul class="nav-group">
                         <li class="nav-item">
                             <!-- Link to Catalog Page -->
-                            <a href="#">
+                            <a href="/photos/catalog">
                                 <i>Catalog</i>
                             </a>
                         </li>
@@ -47,13 +49,13 @@
                         {{#if isAuthenticated}}
 
                         <li class="nav-item">
-                            <a href="#">
+                            <a href="/photos/create">
                                 <i>Add Photo</i>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#">
+                            <a href="/profile">
                                 <i>Profile</i>
                             </a>
                         </li>
@@ -81,13 +83,7 @@
             </div>
         </nav>
     </header>
-    {{#each errorMessage}}
-     <div>
-        <div class="errorContainer">
-            <p>{{this}}</p>
-        </div>
-    </div>
-    {{/each}}
+  
     {{{body}}}
 
     <div class="footer">
