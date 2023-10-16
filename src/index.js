@@ -2,7 +2,7 @@ const app = require('express')()
 const { log } = require('console')
 const connectDB = require('./config/mongooseDB')
 // const router = require('./config/routes')
-const PORT = 5000
+const PORT = 10000
 
 connectDB()
 .then(()=> log('Welcome to Mongodb'))
