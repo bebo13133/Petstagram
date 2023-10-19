@@ -6,13 +6,7 @@ const uriPets = 'mongodb://0.0.0.0:27017/pets'
 
 async function connectDB (){
 
-await mongoose.connect(uriPets,function(err, db) {
-    if (err) {
-      throw err;
-    }
-    console.log('db connected on port')
-    db.close()
-  })
+await mongoose.connect(uriPets)
+
 }
 module.exports = connectDB
-
