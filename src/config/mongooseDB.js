@@ -10,7 +10,7 @@ await mongoose.connect(uriPets,function(err, db) {
     if (err) {
       throw err;
     }
-    console.log('db connected')
+    console.log('db connected on port')
     db.close()
   })
 }
