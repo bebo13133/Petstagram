@@ -12,7 +12,7 @@ const uriPets = 'mongodb+srv://bebo1313:bebo840512@bebo.5xjumgr.mongodb.net/?aut
 const connectDB = async () => {
     try {
       mongoose.set("strictQuery", false);
-     await mongoose.connect(uriPets);
+     await mongoose.connect(uriPets,{writeConcern: { w: 'majority', j: true, wtimeout: 1000 }});
       console.log("Connected to Mongo Successfully!");
     } catch (error) {
       console.log(error);
