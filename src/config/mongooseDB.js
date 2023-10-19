@@ -12,7 +12,7 @@ const uriPets = 'mongodb://0.0.0.0:27017/pets'
 const connectDB = async () => {
     try {
       mongoose.set("strictQuery", false);
-      mongoose.connect(uriPets);
+     await mongoose.connect(uriPets);
       console.log("Connected to Mongo Successfully!");
     } catch (error) {
       console.log(error);
