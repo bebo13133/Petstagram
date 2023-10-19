@@ -4,7 +4,7 @@
   "description": "exam project",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon src/index.js"
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
