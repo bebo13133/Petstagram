@@ -2,7 +2,9 @@ const mongoose = require('mongoose')
 
 
 //TODO: CHANGE DB NAME mongodb://127.0.0.1:27017/name - заместваме според задачата
-const uriPets = 'mongodb://127.0.0.1:27017/pets'
+const uriPets = 'mongodb-pedt:27017/pets'
+
+
 
 // async function connectDB (){
 
